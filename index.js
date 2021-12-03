@@ -1,10 +1,10 @@
 const Provable = require("provable");
 const fs = require("fs").promises;
 
-const MAX_CHOICES = 30;
-const SEED_PHRASE = "cashgrab";
 const MIN = 1;
 const MAX = 140;
+const MAX_CHOICES = 30;
+const SEED_PHRASE = "cashgrab";
 
 const engine = Provable({ count: 10000, seed: SEED_PHRASE });
 const choices = [];
