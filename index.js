@@ -12,14 +12,25 @@ const engine = Provable({ count: 10000, seed: "cashgrab" });
 const choices = [];
 const maxChoices = 30;
 
-for (let i = 0; i < maxChoices; i++) {
+function makeChoice() {
   const nextHash = engine.next();
   const nextChoice = Provable.toFloat(nextHash, 1, 140, true);
   const nextChoiceInt = Math.floor(nextChoice);
-  choices.push(nextChoiceInt);
+  const isUnique = !choices.includes(nextChoiceInt);
+  if (isUnique) choices.push(nextChoiceInt);
+  const maxReached = choices.length === maxChoices;
+  if (maxReached) return;
+  makeChoice();
 }
 
+makeChoice();
+
 const fileNames = choices.map((choice) => `${choice}.png`);
+console.log(
+  "These numbers should be the same:",
+  fileNames.length,
+  new Set(fileNames).size
+);
 
 fs.writeFile("./choices.csv", fileNames.join("\r\n"));
 
